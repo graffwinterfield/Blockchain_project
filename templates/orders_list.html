@@ -1,0 +1,74 @@
+<script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+
+<html>
+<!DOCTYPE html>
+
+
+<head>
+    <title>MetaMask Transaction Example</title>
+
+</head>
+<body>
+{% if contract_data %}
+    <form id="transactionForm" style="display: none;">
+        <label for="recipientAddress">Recipient Address:</label>
+        <input type="text" id="recipientAddress" required><br>
+        <label for="amount">Amount (ETH):</label>
+        <input type="number" id="amount" step="1" value="{{ contract_data.fixed_amount }}" readonly><br> <!-- Значение и readonly -->
+        <button type="submit">Send Transaction</button>
+    </form>
+{% endif %}
+</body>
+</html>
+
+
+
+
+{% if data %}
+
+        <h1>id_order: {{ data.id_order }}</h1>
+         <p>from: {{ data.name_from }}</p>
+    <p>to: {{ data.name_to }}</p>
+    <p>amount: {{ data.amount }}</p>
+ {% if data.permission == True  %}
+
+
+<p>Всего уплачено: {{contract_data.total_paid}}</p>
+<p>Задолжность: {{contract_data.total_markup}}</p>
+<p>Подтверждение полной оплаты: {{contract_data.payed_success}}</p>
+ <button id="connectMetaMaskBtn">Connect MetaMask</button>
+
+<script src="{{ url_for('static', filename='assets/js/metamask.js') }}"> </script>
+<p> Status: подтвержденный</p>
+    {% else %}
+    <p> Status: ожидание</p>
+
+    {% endif %}
+{% if contract_data.payed_success == True %}
+
+
+<p>Оплата подтверждена!</p>
+
+
+
+{% endif %}
+
+
+  {% else %}
+    <p>Нет заявок.</p>
+    {% endif %}
+
+
+
+
+    {% if hash %}
+
+  <a href="/index/">Back to Search Hash info</a>
+    <p>Hash: {{ hash }}</p>
+    {% else %}
+    <p>No block found with the provided hash.</p>
+    {% endif %}
+
+{% if block %}
+<p>block: {{block}}</p>
+{% endif %}

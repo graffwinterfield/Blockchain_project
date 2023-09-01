@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+</head>
+<body>
+    <h1>Search Result</h1>
+    {% if data %}
+    <p>id_order: {{ data.id_order }}</p>
+    <p>from: {{ data.name_from }}</p>
+    <p>to: {{ data.name_to }}</p>
+    <p>amount: {{ data.amount }}</p>
+    <p>permission: {{ data.permission }}</p>
+
+    {% else %}
+    <p>No block found with the provided hash.</p>
+    {% endif %}
+    <a href="/index/">Back to Search</a>
+</body>
+</html>

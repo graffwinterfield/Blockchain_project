@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Result</title>
+</head>
+<body>
+    <h1>Search Result</h1>
+    {% if data %}
+    {% for i in data %}
+    <p>{{i}}</p>
+    {% endfor %}
+    <p>{{data}}</p>
+    {% else %}
+    <p>No smart contract.</p>
+    {% endif %}
+    <a href="/index/">Back to Search</a>
+</body>
+</html>
