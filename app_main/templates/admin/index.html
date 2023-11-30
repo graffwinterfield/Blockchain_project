@@ -1,0 +1,46 @@
+{% extends 'admin/master.html' %}
+
+
+{% block body %}
+<h2>Welcome to admin</h2>
+<ul>
+    <li><a href="/kss/user">User</a></li>
+
+</ul>
+
+<body>
+    <h1>Search Result</h1>
+    {% if data %}
+         {% for i in data %}
+        <h1>id_order: {{ i.id_order }}</h1>
+         <p>from: {{ i.name_from }}</p>
+    <p>to: {{ i.name_to }}</p>
+    <p>amount: {{ i.amount }}</p>
+    <p>permission: {{ i.permission }}</p>
+
+    <form action="{{url_for('submit', order_id=i.id_order)}}" method="POST">
+
+  <input type="hidden" name="my_boolean" value="True">
+  <button type="submit">Submit True</button>
+
+</form>
+
+<form action="{{url_for('submit', order_id=i.id_order)}}" method="POST">
+  <input type="hidden" name="my_boolean" value="False">
+  <button type="submit">Submit False</button>
+</form>
+        {% endfor %}
+
+
+    <p></p>
+
+    </form>
+
+
+
+    {% else %}
+    <p>No orders.</p>
+    {% endif %}
+    <a href="/index/">Back to Search</a>
+</body>
+{% endblock body %}

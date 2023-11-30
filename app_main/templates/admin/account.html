@@ -1,0 +1,74 @@
+
+{% extends 'site/base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>my account</title>
+</head>
+{% block main  %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="notification is-danger">
+    {% for message in messages %}
+    <li style="color:red">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<h1>Список заявок</h1>
+
+{% if orders %}
+{% for order in orders %}
+<a href="/order/{{order.id_order}}">Заявка № {{loop.index}}</a>
+{% endfor %}
+{% endif %}
+<p>
+</p>
+<p>
+</p>
+<h2>
+   Мои Транзакции
+</h2>
+
+{% if blocks %}
+{% for block in blocks %}
+<p>Транзакция № {{loop.index}} {{block.hash}} </p>
+{% endfor %}
+{% endif %}
+
+
+{% if order %}
+<p>{{order.order_id}}</p>
+<p>{{order.name_from}}</p>
+<p>{{order.name_to}}</p>
+<p>{{order.amount}}</p>
+{% if order.permission==False %}
+<ul class="notification is-danger">
+    <li style="color:red">Status: Отказано</li>
+</ul>
+{% elif order.permission==True %}
+<ul class="notification is-danger">
+    <li style="color:green">Status: Подтвержденный</li>
+</ul>
+{% elif order.permission==None %}
+<ul class="notification is-danger">
+    <li style="color:orange">Status: Ожидание</li>
+</ul>
+{% endif %}
+{% endif %}
+
+<form action="/search_hash" method="post">
+    <h1 class="h3 mb-3 fw-normal">Blockchain Search</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="hash" name="hash" placeholder="0x">
+      <label for="hash">Enter Hash:</label>
+    </div>
+
+
+    <button  type="submit">Search</button>
+  </form>
+
+{% endblock %}

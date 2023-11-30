@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap4/css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='bootstrap4/js/bootstrap.min.js') }}"></script>
+<head>
+    <title> Регистрация аккаунта </title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Cryptocurrency Landing Page Template">
+    <meta name="keywords" content="cryptocurrency, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="{{url_for('static', filename='crypto-master/img/favicon.ico')}}" rel="shortcut icon"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='crypto-master/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='crypto-master/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='crypto-master/css/themify-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='crypto-master/css/animate.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='crypto-master/css/owl.carousel.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='crypto-master/css/style.css') }}"/>
+
+
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+</head>
+<header class="header-section clearfix">
+    <div class="container-fluid">
+        <a href="index.html" class="site-logo">
+            <img src="img/logo.png" alt="">
+        </a>
+        <div class="responsive-bar"><i class="fa fa-bars"></i></div>
+        <a href="" class="user"><i class="fa fa-user"></i></a>
+        <a href="/login/" class="site-btn">Войти</a>
+        <nav class="main-menu">
+            <ul class="menu-list">
+                <li><a href="">Solution</a></li>
+                <li><a href="">Features</a></li>
+                <li><a href="">News</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 hero-text">
+                <h2>Исламский <span>банк</span><br></h2>
+                <div class="column is-15 is-offset-20">
+                    <div class="box">
+                        <form class="column is-10 is-offset-5" method="POST" action="/signup/" enctype="multipart/form-data">
+                            <div class="reg_form col-10">
+                                <div class="form-group">
+                                    <input type="text" name="passport_seria" class="form-control"
+                                           placeholder="9512">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="passport_number" class="form-control"
+                                           placeholder="789605">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control"
+                                           placeholder="Имя">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control"
+                                           placeholder="name@example.com">
+                                </div>
+                               
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control"
+                                           placeholder="Ваш пароль">
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <ul class="notification is-danger">
+                                        {% for message in messages %}
+                                        <li style="color:red">{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% endwith %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="file-input">Прикрепите паспорт</label>
+                                    <input id="file-input" type="file" name="file" multiple>
+                                    <label for="file-input">Выберите файл</label>
+                                    <span>или перетащите его сюда</span>
+                                </div>
+                                <button type="submit" class="site-btn sb-gradients">Регистрация</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="{{url_for('static', filename='crypto-master/img/laptop.png')}}">
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{{ url_for('static', filename='crypto-master/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='crypto-master/js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='crypto-master/js/main.js') }}"></script>
+
+

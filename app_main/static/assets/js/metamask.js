@@ -1,12 +1,31 @@
 
 document.addEventListener('DOMContentLoaded', async function() {
+const currentUrl = window.location.href;
+const urlParts = currentUrl.split('/');
+const order_id = urlParts[urlParts.length - 1];
+console.log(order_id);
+const send_resp = await fetch('/get_payment/'+order_id, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: []
+                        });
+                        if (send_resp.ok) {
+    const response_ = await send_resp.json();
+    const totalPaidValue = document.getElementById('totalPaidValue');
+    const total_left = document.getElementById('total_left');
+    totalPaidValue.innerText = response_.contract_data.total_paid;
+    total_left.innerText = response_.contract_data.total_left;
+    const amount_set = document.getElementById('amount');
+    amount_set.value = response_.contract_data.fixed_amount;
+    const amount = parseFloat(document.getElementById('amount').value);
+
+}
             const connectMetaMaskBtn = document.getElementById('connectMetaMaskBtn');
             const transactionForm = document.getElementById('transactionForm');
-
             connectMetaMaskBtn.addEventListener('click', async function() {
-
-
-                       await window.ethereum.request({
+                await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
                 params: [{
                     chainId: '0x7a69'
@@ -31,13 +50,31 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
 
             });
-
-            // Убираем обработчик для изменения amount, так как значение уже задано
-
             transactionForm.addEventListener('submit', async function(event) {
+
+
                 event.preventDefault();
+                const currentUrl = window.location.href;
+const urlParts = currentUrl.split('/');
+const order_id = urlParts[urlParts.length - 1];
+console.log(order_id);
+const send_resp = await fetch('/get_payment/'+order_id, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: []
+                        });
+                        if (send_resp.ok) {
+                const response = await send_resp.json();
+            console.log(response);
                 const recipientAddress = document.getElementById('recipientAddress').value;
+                const amount_set = document.getElementById('amount');
+                amount_set.value = response.contract_data.fixed_amount;
                 const amount = parseFloat(document.getElementById('amount').value);
+                console.log(amount);
+                }
+                const amount = document.getElementById('amount').value;
                await window.ethereum.enable();
                                 const web3 = new Web3(window.ethereum, "any");
 
@@ -45,34 +82,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // Получите адрес аккаунта кошелька
                         const accounts = await web3.eth.getAccounts();
                         const accountAddress = accounts[0];
-                        const contractAddress = "0x8438Ad1C834623CfF278AB6829a248E37C2D7E3f";
+                        const contractAddress = "0x663F3ad617193148711d28f5334eE4Ed07016602";
                         const contractABI = [
-
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_purchasePrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_customer",
-				"type": "address"
-			}
-		],
-		"name": "finalizeAgreement",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "pay",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
 	{
 		"inputs": [
 			{
@@ -82,12 +93,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 			},
 			{
 				"internalType": "uint256",
-				"name": "_markupAmount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_monthlyInstallment",
+				"name": "_markupprocent",
 				"type": "uint256"
 			}
 		],
@@ -96,9 +102,15 @@ document.addEventListener('DOMContentLoaded', async function() {
 	},
 	{
 		"inputs": [],
-		"name": "withdrawAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "MONTHS_IN_YEAR",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -144,6 +156,19 @@ document.addEventListener('DOMContentLoaded', async function() {
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_customer",
+				"type": "address"
+			}
+		],
+		"name": "getSender",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -200,7 +225,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 	},
 	{
 		"inputs": [],
-		"name": "markupAmount",
+		"name": "markupprocent",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -212,7 +237,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
 		"name": "monthlyInstallment",
 		"outputs": [
 			{
@@ -226,15 +257,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 	},
 	{
 		"inputs": [],
-		"name": "MONTHS_IN_YEAR",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "pay",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -257,7 +282,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
 		"name": "purchasePrice",
 		"outputs": [
 			{
@@ -270,7 +301,33 @@ document.addEventListener('DOMContentLoaded', async function() {
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_Amount",
+				"type": "uint256"
+			}
+		],
+		"name": "setAmount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
+		"name": "setMonthlyInstallment",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
 		"name": "totalPaid",
 		"outputs": [
 			{
@@ -281,41 +338,55 @@ document.addEventListener('DOMContentLoaded', async function() {
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 
+
 ];
+console.log(amount);
+console.log(web3.utils.toWei(amount.toString(),'ether'));
                         const contract = new web3.eth.Contract(contractABI, contractAddress);
-
                            if (accounts.length > 0) {
-
                         const gas = '21000'
-
                             const transaction = {
                                 from: accountAddress,
                                 to: recipientAddress,
                                 value: web3.utils.toWei(amount.toString(),'ether'),
                                 gas: gas
                             };
-                            console.log(accountAddress)
                              try {
                              const hash = await contract.methods.pay().send({ from: accountAddress, value: web3.utils.toWei(amount.toString(),'ether') });
-
-
                             console.log(hash)
                             const data = {
                             recipient_address: recipientAddress,
                             amount: amount,
                             hash: hash
                         };
-const currentUrl = window.location.href;
 
-// Разделите URL-адрес по слешам и получите последний элемент
-const urlParts = currentUrl.split('/');
-const order_id = urlParts[urlParts.length - 1];
+                        const send_resp = await fetch('/get_payment/'+order_id, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: []
+                                            });
+                                            if (send_resp.ok) {
+                        const response_ = await send_resp.json();
+                        const totalPaidValue = document.getElementById('totalPaidValue');
+                        const total_left = document.getElementById('total_left');
+                        totalPaidValue.innerText = response_.contract_data.total_paid;
+                        total_left.innerText = response_.contract_data.total_left;
+                        console.log(total_left);
+                        }
 
-// order_id теперь содержит значение <int:order_id>
-console.log(order_id);
-                        const response = await fetch('/order/'+order_id, {
+
+                        const response = await fetch('/create_txn/'+order_id, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -327,9 +398,7 @@ console.log(order_id);
                             console.log('Transaction hash:', hash.transactionHash);
                             } catch (error) {
             console.error('Error sending transaction:', error);
-        }
-                        }
-
-
+                }
+             }
             });
         });

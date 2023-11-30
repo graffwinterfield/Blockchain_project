@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends 'site/base.html' %}
 <head>
     <title>Search Result</title>
 </head>
+
+{% block main  %}
 <body>
     <h1>Search Result</h1>
     {% if block %}
@@ -16,4 +17,5 @@
     {% endif %}
     <a href="/index/">Back to Search</a>
 </body>
-</html>
+
+{% endblock   %}
