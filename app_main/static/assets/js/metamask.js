@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // Получите адрес аккаунта кошелька
                         const accounts = await web3.eth.getAccounts();
                         const accountAddress = accounts[0];
-                        const contractAddress = "0xbCF26943C0197d2eE0E5D05c716Be60cc2761508";
+                        const contractAddress = "0x8438Ad1C834623CfF278AB6829a248E37C2D7E3f";
                         const contractABI = [
 
 	{

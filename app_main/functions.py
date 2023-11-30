@@ -51,7 +51,7 @@ class Block():
 
 class Settings():
     def __init__(self):
-        with open('Blockchain_proj/contracts_abi.json', 'r') as f:
+        with open('config/contracts_abi.json', 'r') as f:
             data = f.read()
         self.contracts = json.loads(data)
 
